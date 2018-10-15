@@ -11,10 +11,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+using Microsoft.EntityFrameworkCore;
+using CS_Profile_Backend.Models;
+using Microsoft.AspNetCore.Cors;
+
 namespace CS_Profile_Backend
 {
     public class Startup
     {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<ProfileContext>(opt =>
+                opt.UseInMemoryDatabase("ProfileList"));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseMvc();
+        }
+        /*removed for now
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,6 +57,6 @@ namespace CS_Profile_Backend
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
+        }*/
     }
 }
