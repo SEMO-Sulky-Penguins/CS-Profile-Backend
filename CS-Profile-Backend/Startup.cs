@@ -21,15 +21,26 @@ namespace CS_Profile_Backend
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            //CORS error No 'Access-Control-Allow-Origin' header
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin()
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod();
+                      });
+            });
             services.AddDbContext<ProfileContext>(opt =>
                 opt.UseInMemoryDatabase("ProfileList"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-        public void Configure(IApplicationBuilder app)
+        /*public void Configure(IApplicationBuilder app)
         {
             app.UseMvc();
-        }
-        /*removed for now
+        }*/
+        //removed for now
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,10 +49,10 @@ namespace CS_Profile_Backend
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-        }
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -55,8 +66,12 @@ namespace CS_Profile_Backend
                 app.UseHsts();
             }
 
+            // Shows UseCors with named policy.
+            //CORS error No 'Access-Control-Allow-Origin' header
+            app.UseCors("AllowAllHeaders");
+
             app.UseHttpsRedirection();
             app.UseMvc();
-        }*/
+        }
     }
 }
