@@ -48,13 +48,13 @@ namespace CSProfile.Controllers
                 _context.ProfileItems.Add(new Profile {
                     Id = 3,
                     ImgPath = "../../assets/images/Derek_Mandl.jpg", 
-                    name = "Derek Mandl",
-                    major = "Computer Science",
-                    location = "Manchester, MO",
+                    Name = "Derek Mandl",
+                    Major = "Computer Science",
+                    Location = "Manchester, MO",
                     CollegeStatus = "Senior",
-                    languages = "C, C++, Java, Python",
-                    interests = "Compilers, Static Languages",
-                    organizations = "ACM-SEMO, Camera Arts Association"
+                    Languages = "C, C++, Java, Python",
+                    Interests = "Compilers, Image Processing",
+                    Organizations = "ACM-SEMO, Camera Arts Association"
                 });
 				_context.ProfileItems.Add(new Profile {
 					Id = 4,
