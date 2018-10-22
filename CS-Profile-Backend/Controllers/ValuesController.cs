@@ -8,7 +8,7 @@ namespace CS_Profile_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : Controller
     {
         // GET api/values
         [HttpGet]

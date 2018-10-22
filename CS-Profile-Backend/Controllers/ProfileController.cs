@@ -10,7 +10,7 @@ using CS_Profile_Backend.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CS_Profile_Backend.Controllers
+namespace CSProfileBackend.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("AllowAllHeaders")]//CORS error No 'Access-Control-Allow-Origin' header
@@ -132,6 +132,7 @@ public class ProfileController : ControllerBase
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
+        [EnableCors("AllowAllHeaders")]//CORS error No 'Access-Control-Allow-Origin' header
         public ActionResult<ProfileItem> GetById(long id)
         {
             var item = _context.ProfileItems.Find(id);
@@ -144,20 +145,22 @@ public class ProfileController : ControllerBase
 
         // POST api/<controller>
         [HttpPost]
-    public void Post([FromBody]string value)
-    {
-    }
+        [EnableCors("AllowAllHeaders")]//CORS error No 'Access-Control-Allow-Origin' header
+        public void Post([FromBody]string value)
+        {}
 
-    // PUT api/<controller>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody]string value)
-    {
-    }
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        [EnableCors("AllowAllHeaders")]//CORS error No 'Access-Control-Allow-Origin' header
+        public void Put(int id, [FromBody]string value)
+        {
+        }
 
-    // DELETE api/<controller>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        [EnableCors("AllowAllHeaders")]//CORS error No 'Access-Control-Allow-Origin' header
+        public void Delete(int id)
+        {
+        }
 }
 }
