@@ -22,9 +22,42 @@ namespace CSProfile.Controllers
             _context = context;
 
 			if(_context.ProfileItems.Count() == 0)
-			{
+			{	
 				_context.ProfileItems.Add(new Profile {
-					Id = 1,
+                    Id = 1,
+                    ImgPath = "../../assets/images/anon.jpg",
+                    Name = "Stephen Sladek",
+                    Major = "Information Systems",
+                    Location = "Gordonville, MO",
+                    CollegeStatus = "Senior",
+                    Languages =  "C, C++, C#, Java, JavaScript" ,
+                    Interests =  "Virtual Reality, Biometrics" ,
+                    Organizations =  "ACM-SEMO, CS Club, SIGAI" 
+                });
+                _context.ProfileItems.Add(new Profile  {
+                    Id = 2,
+                    ImgPath = "../../assets/images/anon.jpg",
+                    Name = "Anonymous",
+                    Major = "Cybersecurity",
+                    Location = "---",
+                    CollegeStatus = "Freshman",
+                    Languages =  "---" , 
+                    Interests = "---", 
+                    Organizations =  "---" 
+                 });
+                _context.ProfileItems.Add(new Profile {
+                    Id = 3,
+                    ImgPath = "../../assets/images/Derek_Mandl.jpg", 
+                    name = "Derek Mandl",
+                    major = "Computer Science",
+                    location = "Manchester, MO",
+                    CollegeStatus = "Senior",
+                    languages = "C, C++, Java, Python",
+                    interests = "Compilers, Static Languages",
+                    organizations = "ACM-SEMO, Camera Arts Association"
+                });
+				_context.ProfileItems.Add(new Profile {
+					Id = 4,
 					ImgPath = "../../assets/images/anon.jpg",
 					Name = "Anonymous",
 					Major = "Computer Science",
@@ -34,7 +67,53 @@ namespace CSProfile.Controllers
 					Interests = "none",
 					Organizations = "none"
 				});
+                _context.ProfileItems.Add(new Profile {
+                    Id = 5,
+                    ImgPath = "../../assets/images/anon.jpg", 
+                    Name = "Anonymous",
+                    Major = "---",
+                    Location = "---",
+                    CollegeStatus = "---",
+                    Languages = "---",
+                    Interests = "---",
+                    Organizations = "---"
+                });
+                _context.ProfileItems.Add(new Profile {
+                    Id = 6,
+                    ImgPath = "../../assets/images/anon.jpg", 
+                    Name = "Anonymous",
+                    Major = "---",
+                    Location = "---",
+                    CollegeStatus = "---",
+                    Languages = "---",
+                    Interests = "---",
+                    Organizations = "---"
+                });
+                _context.ProfileItems.Add(new Profile {
+                    Id = 7,
+                    ImgPath = "../../assets/images/anon.jpg", 
+                    Name = "Anonymous",
+                    Major = "---",
+                    Location = "---",
+                    CollegeStatus = "---",
+                    Languages = "---",
+                    Interests = "---",
+                    Organizations = "---"
+                });
+                _context.ProfileItems.Add(new Profile {
+                    Id = 8,
+                    ImgPath = "../../assets/images/anon.jpg", 
+                    Name = "Anonymous",
+                    Major = "---",
+                    Location = "---",
+                    CollegeStatus = "---",
+                    Languages = "---",
+                    Interests = "---",
+                    Organizations = "---"
+                });
+				
 				_context.SaveChanges();
+				
 			}
         }
 
