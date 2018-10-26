@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 
+using CSProfile.Models;
+
 namespace CSProfile
 {
     public class Startup
@@ -37,6 +39,9 @@ namespace CSProfile
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //this is new for the local DB:
+            services.AddDbContext<ProfileContext>(option =>
+                option.UseSqlServer(Configuration.GetConnectionString("profileContext")));
 			services.AddCors(options =>
 			{
 				options.AddPolicy("AllowAllHeaders", builder =>
@@ -44,8 +49,9 @@ namespace CSProfile
 					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 				});
 			});
-			services.AddDbContext<Models.ProfileContext>(opt =>
-			opt.UseInMemoryDatabase("ProfileList"));
+            //old code for previous pseudo db
+			//services.AddDbContext<Models.ProfileContext>(opt =>
+			//opt.UseInMemoryDatabase("ProfileList"));
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

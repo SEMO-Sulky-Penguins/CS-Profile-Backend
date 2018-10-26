@@ -20,170 +20,102 @@ namespace CSProfile.Controllers
         public ProfilesController(ProfileContext context)
         {
             _context = context;
-
-			if(_context.ProfileItems.Count() == 0)
-			{	
-				_context.ProfileItems.Add(new Profile {
-                    Id = 1,
-                    ImgPath = "../../assets/images/anon.jpg",
-                    Name = "Stephen Sladek",
-                    Major = "Information Systems",
-                    Location = "Gordonville, MO",
-                    CollegeStatus = "Senior",
-                    Languages =  "C, C++, C#, Java, JavaScript" ,
-                    Interests =  "Virtual Reality, Biometrics" ,
-                    Organizations =  "ACM-SEMO, CS Club, SIGAI" 
-                });
-                _context.ProfileItems.Add(new Profile  {
-                    Id = 2,
-                    ImgPath = "../../assets/images/anon.jpg",
-                    Name = "Anonymous",
-                    Major = "Cybersecurity",
-                    Location = "---",
-                    CollegeStatus = "Freshman",
-                    Languages =  "---" , 
-                    Interests = "---", 
-                    Organizations =  "---" 
-                 });
-                _context.ProfileItems.Add(new Profile {
-                    Id = 3,
-                    ImgPath = "../../assets/images/Derek_Mandl.jpg", 
-                    Name = "Derek Mandl",
-                    Major = "Computer Science",
-                    Location = "Manchester, MO",
-                    CollegeStatus = "Senior",
-                    Languages = "C, C++, Java, Python",
-                    Interests = "Compilers, Image Processing",
-                    Organizations = "ACM-SEMO, Camera Arts Association"
-                });
-				_context.ProfileItems.Add(new Profile {
-					Id = 4,
-					ImgPath = "../../assets/images/anon.jpg",
-					Name = "Anonymous",
-					Major = "Computer Science",
-					Location = "---",
-					CollegeStatus = "Junior",
-					Languages = "Java,Python,SQL",
-					Interests = "none",
-					Organizations = "none"
-				});
-                _context.ProfileItems.Add(new Profile {
-                    Id = 5,
-                    ImgPath = "../../assets/images/anon.jpg", 
-                    Name = "Anonymous",
-                    Major = "---",
-                    Location = "---",
-                    CollegeStatus = "---",
-                    Languages = "---",
-                    Interests = "---",
-                    Organizations = "---"
-                });
-                _context.ProfileItems.Add(new Profile {
-                    Id = 6,
-                    ImgPath = "../../assets/images/anon.jpg", 
-                    Name = "Anonymous",
-                    Major = "---",
-                    Location = "---",
-                    CollegeStatus = "---",
-                    Languages = "---",
-                    Interests = "---",
-                    Organizations = "---"
-                });
-                _context.ProfileItems.Add(new Profile {
-                    Id = 7,
-                    ImgPath = "../../assets/images/anon.jpg", 
-                    Name = "Anonymous",
-                    Major = "---",
-                    Location = "---",
-                    CollegeStatus = "---",
-                    Languages = "---",
-                    Interests = "---",
-                    Organizations = "---"
-                });
-                _context.ProfileItems.Add(new Profile {
-                    Id = 8,
-                    ImgPath = "../../assets/images/anon.jpg", 
-                    Name = "Anonymous",
-                    Major = "---",
-                    Location = "---",
-                    CollegeStatus = "---",
-                    Languages = "---",
-                    Interests = "---",
-                    Organizations = "---"
-                });
-				
-				_context.SaveChanges();
-				
-			}
         }
 
 		[HttpGet]
 		[EnableCors("AllowAllHeaders")]
-		public ActionResult<List<Profile>> GetAll()
+		public IEnumerable<Profile> GetAll()
 		{
-			return _context.ProfileItems.ToList();
+            return _context.ProfileItems;
 		}
 
 		[HttpGet("{id}", Name = "getProfile")]
 		[EnableCors("AllowAllHeaders")]
-		public ActionResult<Profile> GetById(long id)
+		public async Task<IActionResult> GetById([FromRoute] long id)
 		{
-			var item = _context.ProfileItems.Find(id);
-			if(item == null)
-			{
-				return NotFound();
-			}
-			return item;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var profile = await _context.ProfileItems.FindAsync(id);
+
+            if(profile == null)
+            {
+                return NotFound();
+            }
+            return Ok(profile);
 		}
 
 		[HttpPost]
 		[EnableCors("AllowAllHeaders")]
-		public IActionResult Create(Profile item)
+		public async Task<IActionResult> Create([FromBody] Profile item)
 		{
-			_context.ProfileItems.Add(item);
-			_context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.ProfileItems.Add(item);
+            await _context.SaveChangesAsync();
 			return CreatedAtRoute("getProfile", new { id = item.Id }, item);
 		}
 
 		[HttpPut("{id}")]
 		[EnableCors("AllowAllHeaders")]
-		public IActionResult Update(long id, Profile item)
+		public async Task<IActionResult> Update([FromRoute] long id, [FromBody] Profile item)
 		{
-			var profile = _context.ProfileItems.Find(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if(id!= item.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(item).State = EntityState.Modified;
 
-			if(profile == null)
-			{
-				return NotFound();
-			}
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProfileExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-			profile.ImgPath = item.ImgPath;
-			profile.Name = item.Name;
-			profile.Major = item.Major;
-			profile.Location = item.Location;
-			profile.CollegeStatus = item.CollegeStatus;
-			profile.Languages = item.Languages;
-			profile.Interests = item.Interests;
-			profile.Organizations = item.Organizations;
-
-			_context.ProfileItems.Update(profile);
-			_context.SaveChanges();
-			return NoContent();
+            return NoContent();
 		}
 
 		[HttpDelete("{id}")]
 		[EnableCors("AllowAllHeaders")]
-		public IActionResult Delete(long id)
+		public async Task<IActionResult> Delete([FromRoute] long id)
 		{
-			var profile = _context.ProfileItems.Find(id);
-			if(profile == null)
-			{
-				return NotFound();
-			}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-			_context.ProfileItems.Remove(profile);
-			_context.SaveChanges();
-			return NoContent();
+            var profile = await _context.ProfileItems.FindAsync(id);
+            if(profile == null)
+            {
+                return NotFound();
+            }
+            _context.ProfileItems.Remove(profile);
+            await _context.SaveChangesAsync();
+            return Ok(profile);
 		}
+
+        private bool ProfileExists(long id)
+        {
+            return _context.ProfileItems.Any(e => e.Id == id);
+        }
 		/*
 		// GET: api/Profiles
 		[HttpGet]
