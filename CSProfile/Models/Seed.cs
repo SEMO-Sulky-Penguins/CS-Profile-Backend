@@ -16,15 +16,14 @@ namespace CSProfile.Models
                 serviceProvider.GetRequiredService<DbContextOptions<ProfileContext>>()))
             {
                 //if there are profile items in the db
-                if (context.ProfileItems.Any())
+                /*if (context.ProfileItems.Any())
                 {
                     //then it is seeded
                     return;
-                }
+                }*/
                 context.ProfileItems.AddRange(
                     new Profile
                     {
-                        Id = 1,
                         ImgPath = "../../assets/images/anon.jpg",
                         Name = "Stephen Sladek",
                         Major = "Information Systems",
@@ -37,7 +36,6 @@ namespace CSProfile.Models
 
                 new Profile
                 {
-                    Id = 2,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "Cybersecurity",
@@ -47,9 +45,9 @@ namespace CSProfile.Models
                     Interests = "---",
                     Organizations = "---"
                 },
+                
                 new Profile
                 {
-                    Id = 3,
                     ImgPath = "../../assets/images/Derek_Mandl.jpg",
                     Name = "Derek Mandl",
                     Major = "Computer Science",
@@ -61,7 +59,6 @@ namespace CSProfile.Models
                 },
                 new Profile
                 {
-                    Id = 4,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "Computer Science",
@@ -73,7 +70,6 @@ namespace CSProfile.Models
                 },
                 new Profile
                 {
-                    Id = 5,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "---",
@@ -85,7 +81,6 @@ namespace CSProfile.Models
                 },
                 new Profile
                 {
-                    Id = 6,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "---",
@@ -97,7 +92,6 @@ namespace CSProfile.Models
                 },
                 new Profile
                 {
-                    Id = 7,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "---",
@@ -109,7 +103,6 @@ namespace CSProfile.Models
                 },
                 new Profile
                 {
-                    Id = 8,
                     ImgPath = "../../assets/images/anon.jpg",
                     Name = "Anonymous",
                     Major = "---",
