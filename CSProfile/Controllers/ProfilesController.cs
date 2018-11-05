@@ -23,7 +23,7 @@ namespace CSProfile.Controllers
             _context = context;
         }
 
-		[HttpGet,Authorize]
+		[HttpGet]
 		[EnableCors("AllowAllHeaders")]
 		public IEnumerable<Profile> GetAll()
 		{
@@ -61,7 +61,7 @@ namespace CSProfile.Controllers
 			return CreatedAtRoute("getProfile", new { id = item.Id }, item);
 		}
 
-		[HttpPut("{id}")]
+		[HttpPut("{id}"), Authorize]
 		[EnableCors("AllowAllHeaders")]
 		public async Task<IActionResult> Update([FromRoute] long id, [FromBody] Profile item)
 		{
