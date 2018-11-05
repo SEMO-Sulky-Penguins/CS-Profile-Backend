@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 using CSProfile.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSProfile.Controllers
 {
@@ -22,7 +23,7 @@ namespace CSProfile.Controllers
             _context = context;
         }
 
-		[HttpGet]
+		[HttpGet,Authorize]
 		[EnableCors("AllowAllHeaders")]
 		public IEnumerable<Profile> GetAll()
 		{

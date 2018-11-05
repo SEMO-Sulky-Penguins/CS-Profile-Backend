@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 
 using CSProfile.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CSProfile
 {
@@ -39,7 +42,23 @@ namespace CSProfile
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //this is new for the local DB:
+			//this is for the authentication
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			.AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					ValidateAudience = true,
+					ValidateLifetime = true,
+					ValidateIssuerSigningKey = true,
+					ValidIssuer = "https://localhost:44305",
+					ValidAudience = "https://localhost:44305",
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+				};
+			});
+
+            //this is for the local DB
             services.AddDbContext<ProfileContext>(option =>
                 option.UseSqlServer(Configuration.GetConnectionString("profileContext")));
 			services.AddCors(options =>
@@ -49,6 +68,15 @@ namespace CSProfile
 					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 				});
 			});
+
+			services.AddCors(options =>
+			{
+				options.AddPolicy("EnableCORS", builder =>
+				{
+					builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
+				});
+			});
+
             //old code for previous pseudo db
 			//services.AddDbContext<Models.ProfileContext>(opt =>
 			//opt.UseInMemoryDatabase("ProfileList"));
@@ -64,7 +92,9 @@ namespace CSProfile
 				app.UseHsts();
 			}
 
+			app.UseAuthentication();
 			app.UseCors("AllowAllHeaders");
+			app.UseCors("EnableCORS");
 			app.UseHttpsRedirection();
             app.UseMvc();
         }
