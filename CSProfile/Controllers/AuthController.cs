@@ -26,8 +26,15 @@ namespace CSProfile.Controllers
 
 			if (user.UserName == "admin" && user.Password == "1234")
 			{
-				var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-				var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                //https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+                Random random = new Random();
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                string key = new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
 				var tokeOptions = new JwtSecurityToken(
 					issuer: "https://localhost:44305",
@@ -45,5 +52,7 @@ namespace CSProfile.Controllers
 				return Unauthorized();
 			}
 		}
+
+
 	}
 }
