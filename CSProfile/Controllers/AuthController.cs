@@ -34,7 +34,7 @@ namespace CSProfile.Controllers
 					issuer: "https://localhost:44305",
 					audience: "https://localhost:44305",
 					claims: new List<Claim>(),
-					expires: DateTime.Now.AddMinutes(.5),
+					expires: DateTime.Now.AddMinutes(5),
 					signingCredentials: signinCredentials
 				);
                 

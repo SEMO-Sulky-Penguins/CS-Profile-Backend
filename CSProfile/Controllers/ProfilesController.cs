@@ -47,7 +47,7 @@ namespace CSProfile.Controllers
             return Ok(profile);
 		}
 
-		[HttpPost]
+		[HttpPost, Authorize]
 		[EnableCors("AllowAllHeaders")]
 		public async Task<IActionResult> Create([FromBody] Profile item)
 		{
