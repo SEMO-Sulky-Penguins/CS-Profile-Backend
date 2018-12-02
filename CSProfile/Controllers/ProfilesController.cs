@@ -94,7 +94,7 @@ namespace CSProfile.Controllers
             return NoContent();
 		}
 
-		[HttpDelete("{id}")]
+		[HttpDelete("{id}"), Authorize]
 		[EnableCors("AllowAllHeaders")]
 		public async Task<IActionResult> Delete([FromRoute] long id)
 		{
