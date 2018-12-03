@@ -25,7 +25,7 @@ namespace CSProfile.Controllers
 			_appEnvironment = appEnvironment;
 		}
 
-		[HttpPut()]
+		[HttpPost()]
 		[EnableCors("AllowAllHeaders")]
 		public async Task<IActionResult> UploadImage([FromRoute] long id, [FromBody] IFormFile file)
 		{
