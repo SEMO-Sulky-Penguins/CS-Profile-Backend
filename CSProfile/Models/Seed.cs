@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSProfile.Models
 {
@@ -12,7 +13,7 @@ namespace CSProfile.Models
 
 		public static void Initialize(IServiceProvider serviceProvider)
 		{
-			const string imagePath = "../wwwroot/ProfileFiles/Images/anon.jpg";
+			//string imagePath = "../wwwroot/ProfileFiles/Images/anon.jpg";
 
 			using (var context = new ProfileContext(
 				serviceProvider.GetRequiredService<DbContextOptions<ProfileContext>>()))
@@ -28,7 +29,7 @@ namespace CSProfile.Models
 					context.ProfileItems.AddRange(
 						new Profile
 						{
-							ImgPath = imagePath,
+							ImgPath = "../../assets/images/anon.jpg",
 							Name = "Stephen Sladek",
 							Major = "Information Systems",
 							Location = "Gordonville, MO",
@@ -36,18 +37,6 @@ namespace CSProfile.Models
 							Languages = "C, C++, C#, Java, JavaScript",
 							Interests = "Virtual Reality, Biometrics",
 							Organizations = "ACM-SEMO, CS Club, SIGAI"
-						},
-
-						new Profile
-						{
-							ImgPath = imagePath,
-							Name = "Anonymous",
-							Major = "Cybersecurity",
-							Location = "---",
-							CollegeStatus = "Freshman",
-							Languages = "---",
-							Interests = "---",
-							Organizations = "---"
 						},
 
 						new Profile
@@ -63,7 +52,7 @@ namespace CSProfile.Models
 						},
 						new Profile
 						{
-							ImgPath = imagePath,
+							ImgPath = "../../assets/images/anon.jpg",
 							Name = "Anonymous",
 							Major = "Computer Science",
 							Location = "---",
@@ -74,7 +63,7 @@ namespace CSProfile.Models
 						},
 						new Profile
 						{
-							ImgPath = imagePath,
+							ImgPath = "../../assets/images/anon.jpg",
 							Name = "Anonymous",
 							Major = "---",
 							Location = "---",
@@ -85,7 +74,7 @@ namespace CSProfile.Models
 						},
 						new Profile
 						{
-							ImgPath = imagePath,
+							ImgPath = "../../assets/images/anon.jpg",
 							Name = "Anonymous",
 							Major = "---",
 							Location = "---",
@@ -96,18 +85,7 @@ namespace CSProfile.Models
 						},
 						new Profile
 						{
-							ImgPath = imagePath,
-							Name = "Anonymous",
-							Major = "---",
-							Location = "---",
-							CollegeStatus = "---",
-							Languages = "---",
-							Interests = "---",
-							Organizations = "---"
-						},
-						new Profile
-						{
-							ImgPath = imagePath,
+							ImgPath = "../../assets/images/anon.jpg",
 							Name = "Anonymous",
 							Major = "---",
 							Location = "---",
@@ -120,7 +98,7 @@ namespace CSProfile.Models
 					context.SaveChanges();
 				}
 			}
-		} // end Initialize
+		} // end Init
 
-	} // end class
+	} //end class
 }
