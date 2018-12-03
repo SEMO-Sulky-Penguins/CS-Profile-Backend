@@ -117,6 +117,7 @@ namespace CSProfile.Controllers
         {
             return _context.ProfileItems.Any(e => e.Id == id);
         }
+
 		/*
 		// GET: api/Profiles
 		[HttpGet]
@@ -225,5 +226,5 @@ namespace CSProfile.Controllers
             return _context.ProfileItems.Any(e => e.Id == id);
         }
 		*/
-    }
+	}
 }
