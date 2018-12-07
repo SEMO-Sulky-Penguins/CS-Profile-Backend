@@ -16,5 +16,6 @@ namespace CSProfile.Models
 		public string Languages { get; set; }
 		public string Interests { get; set; }
 		public string Organizations { get; set; }
+        public string Email { get; set; }
 	}
 }
